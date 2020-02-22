@@ -7,7 +7,6 @@ export default class App extends React.Component {
     super();
     this.state = {
       userInput: '',
-      textdecoration: "none",
       items: []
     };
   }
@@ -22,28 +21,24 @@ export default class App extends React.Component {
     event.preventDefault();
     this.setState({
       userInput: '',
-      items: [...this.state.items, this.state.userInput]
+      items: [...this.state.items, { item: this.state.userInput, textdecoration: "none" }]
     });
   }
 
-
-  deleteTodo(item) {
-
-    
-    
+  deleteTodo(index) {
     this.setState({
-      textdecoration: "line-through"
+      items: [...this.state.items, this.state.items[index].textdecoration = "line-through"]
     });
   }
 
   renderTodos() {
 
-    return this.state.items.map((item) => {
+    return this.state.items.map((item, index) => {
       return (
-        <div key={item}>
+        <div key={index}>
           <h3
-            onClick={this.deleteTodo.bind(this, item)}
-            style={{ textDecoration: this.state.textdecoration }}>{item}
+            onClick={this.deleteTodo.bind(this, index)}
+            style={{ textDecoration: item.textdecoration }}>{item.item}
           </h3>
         </div>
       );
